@@ -126,6 +126,11 @@ namespace FinalProgramacionD
             {
                 for (int j = 0; j < usuarios.GetLength(1); j++)
                 {
+                    if (usuarios[i, j] == null)
+                    {
+                        Console.WriteLine("No hay usuarios registrados");
+                        break;
+                    }
                     Console.Write(usuarios[i, j] + "/");
                 }
                 Console.WriteLine();
