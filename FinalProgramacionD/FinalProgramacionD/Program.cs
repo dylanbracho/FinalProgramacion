@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Runtime.Versioning;
+using System.Threading;
 using System.Xml.Serialization;
 
 namespace FinalProgramacionD
 {
     internal class Program
     {
-        static string[,] usuarios = new string[5, 5];
+        static string[,] usuarios = new string[20, 6];
         static void Main(string[] args)
         {
             Menu();
@@ -28,7 +30,8 @@ namespace FinalProgramacionD
 
                     break;
                 case 3:
-
+                    Console.Clear();
+                    SeleccionUsuario();
                     break;
                 case 4:
 
@@ -195,6 +198,52 @@ namespace FinalProgramacionD
                     }
                 }
             }
+        }
+
+        static int BuscarUsuario(string id)
+        {
+            for (int i = 0; i < usuarios.GetLength(0); i++)
+            {
+                if (id == usuarios[i,0])
+                {
+                    return i;
+                } 
+            }
+            return 21;
+        }
+
+        static void SeleccionUsuario()
+        {
+            Console.WriteLine("Ingrese el id del usuario");
+            string id = Console.ReadLine();
+
+            int usuario = BuscarUsuario(id);
+            if (usuario == 21)
+            {
+                Console.WriteLine("Usuario no encontrado");
+                Console.WriteLine("Desea crear un usuario nuevo(s/n)");
+                char siono = char.Parse(Console.ReadLine());
+                if (siono == 's')
+                {
+                    Console.Clear();
+                    CrearUsuario();
+                }
+                return;
+            }
+            Console.WriteLine("Usuario encontrado");
+            Console.WriteLine("Nombre: " + usuarios[usuario, 1]);
+            Console.WriteLine("Apellido: " + usuarios[usuario, 2]);
+            Console.WriteLine("Direccion: " + usuarios[usuario, 3]);
+            Console.WriteLine("Telefono: " + usuarios[usuario, 4]);
+            Console.WriteLine("Email: " + usuarios[usuario, 5]);
+
+            GenerarFactura(usuario);
+        }
+
+        static void GenerarFactura(int fila)
+        {
+            Console.WriteLine($"Factura generada para el usuario: {usuarios[fila, 1]} {usuarios[fila, 2]}");
+            Console.WriteLine("CC: " + usuarios[fila, 0]);
         }
 
         static void VolverMenu()
